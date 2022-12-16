@@ -1,7 +1,6 @@
 # keycloak-admin-client
 sample spring-boot application demonstrating keycloak-admin-client
 
-## Setup keycloak server locally
 ### Prerequisites
 1. java 17
 2. keycloak server(see the [installation](#Installing keycloak server) steps below)
