@@ -1,0 +1,7 @@
+keycloak:
+  enabled: true
+  realm: demo1
+  resource: keycloak-admin-client-client_id #clientId
+  auth-server-url: http://localhost:8083
+  credentials:
+    secret: Hk9p3zlVML1SmOEFTqODKQIBVronOEHn #clientSecret
