@@ -48,16 +48,18 @@ mvn spring-boot:run
 
 ### get all users
 ```shell
-curl --location --request GET 'http://localhost:8080/api/user'
+curl --location --request GET 'http://localhost:8900/api/user'
 ```
 
 ### create new user
 ```shell
-curl --location --request POST 'http://localhost:8080/api/user' \
+curl --location --request POST 'http://localhost:8900/api/user' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "sample-user",
-    "password": "sample-password"
+    "password": {
+        "password":"sample-password"
+    }
 }'
 ```
 

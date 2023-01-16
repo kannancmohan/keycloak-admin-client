@@ -1,11 +1,13 @@
 package com.kcm.test.service;
 
+import static com.kcm.test.service.UserServiceUtil.preparePasswordRepresentation;
+import static com.kcm.test.service.UserServiceUtil.prepareUserRepresentation;
+
 import com.kcm.test.model.UserRequest;
 import java.util.List;
 import javax.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
-import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final Keycloak keycloak;
+
   @Value("${keycloak.realm}")
   private String realm;
 
@@ -40,25 +43,8 @@ public class UserService {
   }
 
   public Response create(final UserRequest request) {
-    var password = preparePasswordRepresentation(request.password());
-    var user = prepareUserRepresentation(request, password);
+    var credentialRepresentation = preparePasswordRepresentation(request.password());
+    var user = prepareUserRepresentation(request, credentialRepresentation);
     return keycloak.realm(realm).users().create(user);
-  }
-
-  public UserRepresentation prepareUserRepresentation(
-      final UserRequest request, final CredentialRepresentation cR) {
-    final var newUser = new UserRepresentation();
-    newUser.setUsername(request.username());
-    newUser.setCredentials(List.of(cR));
-    newUser.setEnabled(true);
-    return newUser;
-  }
-
-  public CredentialRepresentation preparePasswordRepresentation(final String password) {
-    final var cR = new CredentialRepresentation();
-    cR.setTemporary(false);
-    cR.setType(CredentialRepresentation.PASSWORD);
-    cR.setValue(password);
-    return cR;
   }
 }
