@@ -1,7 +1,7 @@
-package com.kcm.test.service;
+package com.kcm.test.service.keycloak;
 
-import static com.kcm.test.service.UserServiceUtil.preparePasswordRepresentation;
-import static com.kcm.test.service.UserServiceUtil.prepareUserRepresentation;
+import static com.kcm.test.service.keycloak.UserServiceUtil.preparePasswordRepresentation;
+import static com.kcm.test.service.keycloak.UserServiceUtil.prepareUserRepresentation;
 
 import com.kcm.test.model.UserRequest;
 import java.util.List;

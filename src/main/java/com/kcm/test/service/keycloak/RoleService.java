@@ -1,4 +1,4 @@
-package com.kcm.test.service;
+package com.kcm.test.service.keycloak;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

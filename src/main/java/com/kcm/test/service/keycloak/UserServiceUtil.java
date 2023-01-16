@@ -1,4 +1,4 @@
-package com.kcm.test.service;
+package com.kcm.test.service.keycloak;
 
 import com.kcm.test.model.UserPasswordRequest;
 import com.kcm.test.model.UserRequest;

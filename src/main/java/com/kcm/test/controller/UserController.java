@@ -1,8 +1,8 @@
 package com.kcm.test.controller;
 
 import com.kcm.test.model.UserRequest;
-import com.kcm.test.service.RoleService;
-import com.kcm.test.service.UserService;
+import com.kcm.test.service.keycloak.RoleService;
+import com.kcm.test.service.keycloak.UserService;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
