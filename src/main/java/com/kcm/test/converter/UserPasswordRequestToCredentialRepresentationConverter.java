@@ -1,30 +1,22 @@
-package com.kcm.test.service.keycloak;
+package com.kcm.test.converter;
 
 import com.kcm.test.model.UserPasswordRequest;
-import com.kcm.test.model.UserRequest;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
 import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.representations.idm.CredentialRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import org.springframework.core.convert.converter.Converter;
 
-public final class UserServiceUtil {
-  private UserServiceUtil() {
-    throw new UnsupportedOperationException();
+public class UserPasswordRequestToCredentialRepresentationConverter
+    implements Converter<UserPasswordRequest, CredentialRepresentation> {
+
+  @Override
+  public CredentialRepresentation convert(UserPasswordRequest source) {
+    return preparePasswordRepresentation(source);
   }
 
-  public static UserRepresentation prepareUserRepresentation(
-      final UserRequest request, final CredentialRepresentation cR) {
-    final var newUser = new UserRepresentation();
-    newUser.setUsername(request.username());
-    newUser.setCredentials(List.of(cR));
-    newUser.setEnabled(true);
-    return newUser;
-  }
-
-  public static CredentialRepresentation preparePasswordRepresentation(
+  private CredentialRepresentation preparePasswordRepresentation(
       final UserPasswordRequest request) {
     Objects.requireNonNull(request);
     Objects.requireNonNull(request.password());
@@ -43,8 +35,8 @@ public final class UserServiceUtil {
   }
 
   @SuppressWarnings("unused")
-  private static CredentialRepresentation prepareHashedPasswordRepresentation2(
-      final String password) throws IllegalAccessException, NoSuchFieldException {
+  private CredentialRepresentation prepareHashedPasswordRepresentation2(final String password)
+      throws IllegalAccessException, NoSuchFieldException {
     final var credential = new CredentialRepresentation();
     credential.setTemporary(false);
     credential.setType(CredentialRepresentation.PASSWORD);
@@ -64,7 +56,7 @@ public final class UserServiceUtil {
     return credential;
   }
 
-  private static CredentialRepresentation prepareHashedPasswordRepresentation(
+  private CredentialRepresentation prepareHashedPasswordRepresentation(
       final String encodedPassword,
       final String passwordSalt,
       final String passwordHashingAlgorithm,

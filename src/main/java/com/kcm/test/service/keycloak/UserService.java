@@ -1,8 +1,5 @@
 package com.kcm.test.service.keycloak;
 
-import static com.kcm.test.service.keycloak.UserServiceUtil.preparePasswordRepresentation;
-import static com.kcm.test.service.keycloak.UserServiceUtil.prepareUserRepresentation;
-
 import com.kcm.test.model.UserRequest;
 import java.util.List;
 import javax.ws.rs.core.Response;
@@ -11,6 +8,7 @@ import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final Keycloak keycloak;
+  private final ConversionService conversionService;
 
   @Value("${keycloak.realm}")
   private String realm;
@@ -43,8 +42,7 @@ public class UserService {
   }
 
   public Response create(final UserRequest request) {
-    var credentialRepresentation = preparePasswordRepresentation(request.password());
-    var user = prepareUserRepresentation(request, credentialRepresentation);
+    var user = conversionService.convert(request, UserRepresentation.class);
     return keycloak.realm(realm).users().create(user);
   }
 }
