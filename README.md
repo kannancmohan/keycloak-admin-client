@@ -63,6 +63,11 @@ curl --location --request POST 'http://localhost:8900/api/user' \
 }'
 ```
 
+### Import users of an accountType
+```shell
+curl --location --request GET 'http://localhost:8900/api/import/type/ADMIN'
+```
+
 
 ## Installing keycloak server
 1. Download latest http://www.keycloak.org/downloads.html
