@@ -2,6 +2,7 @@ package com.kcm.test.config;
 
 import com.kcm.test.converter.UserPasswordRequestToCredentialRepresentationConverter;
 import com.kcm.test.converter.UserRequestToUserRepresentationConverter;
+import com.kcm.test.converter.UserToUserRepresentationConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.format.FormatterRegistry;
@@ -12,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new UserToUserRepresentationConverter());
     registry.addConverter(new UserPasswordRequestToCredentialRepresentationConverter());
     registry.addConverter(
         new UserRequestToUserRepresentationConverter((ConversionService) registry));

@@ -1,8 +1,8 @@
 package com.kcm.test.controller;
 
 import com.kcm.test.model.UserRequest;
-import com.kcm.test.service.keycloak.RoleService;
-import com.kcm.test.service.keycloak.UserService;
+import com.kcm.test.service.keycloak.KeycloakRoleService;
+import com.kcm.test.service.keycloak.KeycloakUserService;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,27 +20,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-  private final UserService userService;
-  private final RoleService roleService;
+  private final KeycloakUserService keycloakUserService;
+  private final KeycloakRoleService keycloakRoleService;
 
   @GetMapping
   public List<UserRepresentation> findAll() {
-    return userService.findAll();
+    return keycloakUserService.findAll();
   }
 
   @GetMapping("/{id}")
   public UserRepresentation findById(@PathVariable String id) {
-    return userService.findById(id);
+    return keycloakUserService.findById(id);
   }
 
   @GetMapping("/username/{username}")
   public List<UserRepresentation> findByUsername(@PathVariable String username) {
-    return userService.findByUsername(username);
+    return keycloakUserService.findByUsername(username);
   }
 
   @PostMapping
   public ResponseEntity<URI> create(@RequestBody UserRequest userRequest) {
-    var response = userService.create(userRequest);
+    var response = keycloakUserService.create(userRequest);
     if (response.getStatus() != 201) {
       throw new RuntimeException("User was not created");
     }
@@ -49,12 +49,12 @@ public class UserController {
 
   @PostMapping("/{userId}/group/{groupId}")
   public void assignToGroup(@PathVariable String userId, @PathVariable String groupId) {
-    userService.assignToGroup(userId, groupId);
+    keycloakUserService.assignToGroup(userId, groupId);
   }
 
   @PostMapping("/{userId}/role/{roleName}")
   public void assignRole(@PathVariable String userId, @PathVariable String roleName) {
-    var role = roleService.findByName(roleName);
-    userService.assignRole(userId, role);
+    var role = keycloakRoleService.findByName(roleName);
+    keycloakUserService.assignRole(userId, role);
   }
 }

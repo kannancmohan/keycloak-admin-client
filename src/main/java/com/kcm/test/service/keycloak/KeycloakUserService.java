@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class KeycloakUserService {
 
   private final Keycloak keycloak;
   private final ConversionService conversionService;

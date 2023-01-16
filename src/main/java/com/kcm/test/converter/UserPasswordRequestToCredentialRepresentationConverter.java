@@ -60,7 +60,7 @@ public class UserPasswordRequestToCredentialRepresentationConverter
       final String encodedPassword,
       final String passwordSalt,
       final String passwordHashingAlgorithm,
-      Integer passwordHashingIterations) {
+      final Integer passwordHashingIterations) {
     var hashingIterations = passwordHashingIterations == null ? 0 : passwordHashingIterations;
     var saltBytes =
         passwordSalt == null ? new byte[0] : passwordSalt.getBytes(StandardCharsets.UTF_8);

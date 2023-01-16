@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RoleService {
+public class KeycloakRoleService {
   private final Keycloak keycloak;
   @Value("${keycloak.realm}")
   private String realm;
