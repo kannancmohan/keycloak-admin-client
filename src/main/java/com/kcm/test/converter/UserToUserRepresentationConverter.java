@@ -1,7 +1,12 @@
 package com.kcm.test.converter;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 import com.kcm.test.service.jpa.entity.User;
+import com.kcm.test.service.jpa.entity.UserRole;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -16,12 +21,19 @@ public class UserToUserRepresentationConverter implements Converter<User, UserRe
   }
 
   private UserRepresentation prepareUserRepresentation(final User source) {
+    // TODO check if password is present, else throw error
     final var password =
         prepareHashedPasswordRepresentation(source.getHashedPassword(), null, "sha1-salted", 1);
     final var newUser = new UserRepresentation();
+    final var roles = source.getRoles();
+    if (!isEmpty(roles)) {
+      newUser.setRealmRoles(roles.stream().map(UserRole::getName).toList());
+    }
     newUser.setUsername(source.getLogin());
     newUser.setCredentials(List.of(password));
     newUser.setEnabled(true);
+    newUser.setEmailVerified(true);
+    newUser.setCreatedTimestamp(Timestamp.from(Instant.now()).getTime());
     return newUser;
   }
 

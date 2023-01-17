@@ -1,5 +1,7 @@
 package com.kcm.test.converter;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
 import com.kcm.test.model.UserRequest;
 import java.util.List;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -29,6 +31,11 @@ public class UserRequestToUserRepresentationConverter
     newUser.setUsername(request.username());
     newUser.setCredentials(List.of(cR));
     newUser.setEnabled(true);
+    newUser.setEmailVerified(true);
+    final var roles = request.roles();
+    if (!isEmpty(roles)) {
+      newUser.setRealmRoles(roles);
+    }
     return newUser;
   }
 }

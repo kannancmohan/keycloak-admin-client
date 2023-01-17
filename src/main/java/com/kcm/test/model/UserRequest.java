@@ -1,3 +1,5 @@
 package com.kcm.test.model;
 
-public record UserRequest(String username, UserPasswordRequest password) {}
+import java.util.List;
+
+public record UserRequest(String username, UserPasswordRequest password, List<String> roles) {}
